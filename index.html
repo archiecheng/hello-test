@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Middle School Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-1: #e6f5ff;
+      --bg-2: #fef6e4;
+      --accent: #0f8b8d;
+      --accent-2: #f45d48;
+      --text: #1f1f2e;
+      --muted: #5b6170;
+      --card: #ffffff;
+      --shadow: 0 18px 45px rgba(18, 44, 72, 0.12);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "DM Sans", "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 15% 20%, rgba(15, 139, 141, 0.12), transparent 35%),
+                  radial-gradient(circle at 80% 0%, rgba(244, 93, 72, 0.16), transparent 30%),
+                  linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+    }
+
+    header {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 18px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 12px;
+      z-index: 5;
+      animation: floatIn 0.7s ease;
+    }
+
+    header h1 {
+      margin: 0;
+      font-family: "Space Grotesk", "DM Sans", sans-serif;
+      letter-spacing: -0.5px;
+      font-size: 26px;
+    }
+
+    .tag {
+      background: var(--accent);
+      color: white;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 12px 30px rgba(15, 139, 141, 0.25);
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      animation: floatIn 0.8s ease;
+    }
+
+    .profile {
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile::before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(15, 139, 141, 0.1), transparent 55%),
+                  radial-gradient(circle, rgba(244, 93, 72, 0.08), transparent 40%);
+      top: -140px;
+      left: -40px;
+      z-index: 0;
+    }
+
+    .avatar {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: conic-gradient(from 120deg, #0f8b8d, #65c5c6, #f5a623, #f45d48, #0f8b8d);
+      margin: 0 auto 14px auto;
+      padding: 6px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 15px 28px rgba(18, 44, 72, 0.2);
+    }
+
+    .avatar span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      background: white;
+      font-size: 44px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -1px;
+    }
+
+    .name {
+      margin: 8px 0 4px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin: 0 0 12px;
+      font-size: 15px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .pill {
+      background: rgba(15, 139, 141, 0.08);
+      color: var(--accent);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .section-title {
+      font-size: 17px;
+      margin: 0 0 10px;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 6px;
+      height: 24px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      background: rgba(15, 139, 141, 0.06);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .item {
+      padding: 10px 12px;
+      border: 1px solid rgba(31, 31, 46, 0.08);
+      border-radius: 12px;
+      display: grid;
+      gap: 4px;
+      background: linear-gradient(135deg, rgba(15, 139, 141, 0.04), rgba(244, 93, 72, 0.03));
+    }
+
+    .item h4 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .item small {
+      color: var(--muted);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .timeline .item {
+      position: relative;
+      padding-left: 36px;
+    }
+
+    .timeline .item::before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 12px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(15, 139, 141, 0.15);
+    }
+
+    .timeline .item::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 26px;
+      width: 2px;
+      height: calc(100% - 26px);
+      background: rgba(31, 31, 46, 0.08);
+    }
+
+    .timeline .item:last-child::after {
+      display: none;
+    }
+
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .button {
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, var(--accent), #0c7072);
+      color: white;
+      box-shadow: 0 12px 25px rgba(15, 139, 141, 0.3);
+    }
+
+    .button.secondary {
+      background: white;
+      color: var(--accent-2);
+      border: 1px solid rgba(244, 93, 72, 0.4);
+      box-shadow: 0 12px 25px rgba(244, 93, 72, 0.12);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    footer {
+      grid-column: 1 / -1;
+      text-align: center;
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @keyframes floatIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 860px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        position: static;
+      }
+
+      body {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Avery Kim · Student Profile</h1>
+      <div class="tag">7th Grade · Lincoln Middle</div>
+    </header>
+
+    <section class="column">
+      <div class="card profile">
+        <div class="avatar"><span>AK</span></div>
+        <div class="name">Avery Kim</div>
+        <div class="subtitle">Curious about robotics, art, and coding tiny games.</div>
+        <div class="pill-row">
+          <div class="pill">Robotics Club</div>
+          <div class="pill">Honor Roll</div>
+          <div class="pill">Student Council</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Quick Stats</div>
+        <div class="stat-grid">
+          <div class="stat">
+            <strong>Math</strong>
+            <span>Geometry crew leader</span>
+          </div>
+          <div class="stat">
+            <strong>Science</strong>
+            <span>Lab assistant badge</span>
+          </div>
+          <div class="stat">
+            <strong>GPA</strong>
+            <span>3.8 · steady climb</span>
+          </div>
+          <div class="stat">
+            <strong>Favorite</strong>
+            <span>Building RC racers</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Class Schedule</div>
+        <div class="timeline">
+          <div class="item">
+            <h4>8:00 AM · Advisory</h4>
+            <small>Check-in, goal setting, planner review.</small>
+          </div>
+          <div class="item">
+            <h4>8:30 AM · Science</h4>
+            <small>Currently testing plant growth in different light colors.</small>
+          </div>
+          <div class="item">
+            <h4>9:30 AM · Math</h4>
+            <small>Exploring angles with origami proofs.</small>
+          </div>
+          <div class="item">
+            <h4>10:45 AM · Language Arts</h4>
+            <small>Writing a graphic short story about skate parks.</small>
+          </div>
+          <div class="item">
+            <h4>12:30 PM · Social Studies</h4>
+            <small>Researching community design and walkability.</small>
+          </div>
+          <div class="item">
+            <h4>1:30 PM · Elective</h4>
+            <small>Robotics build time and coding microgames.</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="column">
+      <div class="card">
+        <div class="section-title">Projects & Hobbies</div>
+        <div class="grid-two">
+          <div class="item">
+            <h4>Reef Rover</h4>
+            <small>Built a small ROV prototype with LEDs to model reef surveys. Learned wiring and waterproofing basics.</small>
+          </div>
+          <div class="item">
+            <h4>Sketch-a-Day</h4>
+            <small>Daily sketch log focused on city shapes and skate decks. Practicing shading with markers.</small>
+          </div>
+          <div class="item">
+            <h4>Pixel Pals</h4>
+            <small>Created a JavaScript mini-game where pixel pets learn new moves from player choices.</small>
+          </div>
+          <div class="item">
+            <h4>Community Map</h4>
+            <small>Team project mapping safe bike routes to school, shared with PTA and council.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Recent Wins</div>
+        <div class="list">
+          <div class="item">
+            <h4>Robotics Invitational · 2nd Place</h4>
+            <small>Programmed a smooth line-follow routine and troubleshooting checklist.</small>
+          </div>
+          <div class="item">
+            <h4>Science Fair Ribbon</h4>
+            <small>Presented results on light wavelength impact on seed sprouting.</small>
+          </div>
+          <div class="item">
+            <h4>Library Volunteer</h4>
+            <small>Organized weekend comic swaps and created signage.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Goals & Support</div>
+        <div class="list">
+          <div class="item">
+            <h4>Goal</h4>
+            <small>Compete in the district robotics challenge with a fully autonomous run.</small>
+          </div>
+          <div class="item">
+            <h4>Growth Focus</h4>
+            <small>Practice concise lab notes and stay ahead on reading responses.</small>
+          </div>
+          <div class="item">
+            <h4>Needs</h4>
+            <small>Wants more practice time with sensors and access to additional servo motors.</small>
+          </div>
+        </div>
+        <div class="cta">
+          <button class="button primary">Cheer Avery On</button>
+          <button class="button secondary">Share Resources</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Built to celebrate curious middle school minds.
+    </footer>
+  </div>
+</body>
+</html>
